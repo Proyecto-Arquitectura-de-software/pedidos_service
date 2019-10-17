@@ -10,6 +10,7 @@ CREATE TABLE estado_pedido (
   descripcion VARCHAR(150)  
 );
 
+
 ALTER TABLE estado_pedido
   ADD PRIMARY KEY (id);
 

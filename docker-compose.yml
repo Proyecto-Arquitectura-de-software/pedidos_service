@@ -1,0 +1,17 @@
+version: "2"
+services:
+ pedidosms:
+  build: .
+  ports:
+   - "3100:3100"
+  depends_on:
+   - dbpedidos
+ dbpedidos:
+  image: mysql:5.7
+  environment:
+   MYSQL_ROOT_PASSWORD: Computing0
+   MYSQL_DATABASE: dbpedidos
+   MYSQL_USER: root
+   MYSQL_PASSWORD: Computing0
+  ports:
+   - "7000:3306"

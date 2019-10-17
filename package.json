@@ -1,10 +1,10 @@
 {
-  "name": "pedidosMS",
+  "name": "pedidos",
   "version": "1.0.0",
-  "description": "",
+  "description": "Este es el microservicio de pedidos para UNdomicilio",
   "main": "index.js",
   "scripts": {
-    "start": "src/index.js"
+    "start": "node src/index.js"
   },
   "keywords": [],
   "author": "Christian Alfonso",

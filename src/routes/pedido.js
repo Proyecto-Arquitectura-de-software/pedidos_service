@@ -1,8 +1,7 @@
 const express = require ('express');
 const router = express.Router();
-const connection = require('../database')
+const connection = require('../database');
 const bodyParser = require('body-parser');
-const pool = require('../database');
 
 
 router.use(bodyParser.json());
@@ -10,7 +9,7 @@ router.use(bodyParser.json());
 
 // Obteniendo todos los pedidos
 router.get('/pedidos', async (req,res) => { 
-    const pedidos = await pool.query('SELECT * FROM pedido', (err, results) => { 
+    const pedidos = await connection.query('SELECT * FROM pedido', (err, results) => { 
         if (err)
             {
                 console.log('Error: ' + err);
@@ -27,7 +26,7 @@ router.get('/pedidos', async (req,res) => {
 
 // Obteniendo un pedido exacto  
 router.get('/pedidos/:id', async (req,res) => { 
-    const pedidos = await pool.query('SELECT * FROM pedido where id = ' + req.params.id, (err, results) => { 
+    const pedidos = await connection.query('SELECT * FROM pedido where id = ' + req.params.id, (err, results) => { 
         if (err)
             {
                 console.log('Error: ' + err);
@@ -53,7 +52,7 @@ router.post('/pedidos', async (req, res) => {
         observaciones    
     };
 
-    await pool.query('INSERT INTO pedido set ?', [nuevoPedido], (err, results) => { 
+    await connection.query('INSERT INTO pedido set ?', [nuevoPedido], (err, results) => { 
         if (err)
             {
                 console.log('Error creando: ' + err);
@@ -79,7 +78,7 @@ router.post('/pedidos/:id', async (req, res) => {
         observaciones    
     };
     console.log(cambiosPedido);
-    await pool.query('UPDATE pedido set ? WHERE id = ?', [cambiosPedido, id], (err, results) => { 
+    await connection.query('UPDATE pedido set ? WHERE id = ?', [cambiosPedido, id], (err, results) => { 
         if (err)
             {
                 console.log('Error actualizando: ' + err);
@@ -97,7 +96,7 @@ router.post('/pedidos/:id', async (req, res) => {
 
 // Eliminando un pedido exacto  
 router.delete('/pedidos/:id', async (req,res) => { 
-    const pedidos = await pool.query('DELETE FROM pedido where id = ' + req.params.id, (err, results) => { 
+    const pedidos = await connection.query('DELETE FROM pedido where id = ' + req.params.id, (err, results) => { 
         if (err)
             {
                 console.log('Error: ' + err);
