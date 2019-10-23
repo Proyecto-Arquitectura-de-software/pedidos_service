@@ -6,6 +6,20 @@ const { database } = require('./keys');
 // Inicialization
 const app = express();
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+
+  // authorized headers for preflight requests
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+
+  app.options('*', (req, res) => {
+      // allowed XHR methods  
+      res.header('Access-Control-Allow-Methods', 'GET, PATCH, PUT, POST, DELETE, OPTIONS');
+      res.send();
+  });
+});
+
 
 // Setup
 app.set('port', 3100);
@@ -22,22 +36,3 @@ app.use(require('./routes/pedido'));
 app.listen(app.get('port'), () => {
     console.log('Server is on port', app.get('port'));
   });
-
-  /* version: "2"
-services:
- pedidos-ms:
-  image: 1022407817/pedidos_pedidos-ms:final
-  ports:
-    - "3100:3100"
-  depends_on:
-    - db_pedidos
- db_pedidos:
-  image: mysql:5.7
-  environment:
-    MYSQL_ROOT_PASSWORD: Computing0
-    MYSQL_DATABASE: db_pedidos
-    MYSQL_USER: root
-    MYSQL_PASSWORD: Computing0
-  ports:
-    - "7000:3306"
-    */

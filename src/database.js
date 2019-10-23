@@ -31,6 +31,7 @@ mysqlConection.connect ((err) => {
           query = query + "CREATE TABLE pedido ( id INT(11) NOT NULL, id_cliente INT(11) NOT NULL, id_estado INT(11) NOT NULL, observaciones VARCHAR(4000), fecha_inicio timestamp NOT NULL DEFAULT current_timestamp, fecha_fin timestamp NOT NULL DEFAULT current_timestamp, CONSTRAINT fk_estado FOREIGN KEY(id_estado) REFERENCES estado_pedido(id));";
           query = query + "ALTER TABLE pedido ADD PRIMARY KEY (id);";
           query = query + "INSERT INTO pedido VALUES (1, 12, 1, 'Es el pedido para el cliente 12, y esta en estado en curso (1)', null, null);";
+          query = query + "INSERT INTO pedido VALUES (2, 5, 1, 'Es el pedido para el cliente 15, y esta en estado en curso (1)', null, null);";
 
           mysqlConection.query(query, function (err,result){
               if(err)
@@ -39,50 +40,19 @@ mysqlConection.connect ((err) => {
                   }
               else
                   {
-                      console.log ("Base de datos inicializada correctamente")
+                      console.log ("Base de datos inicializada correctamente");
+                      console.log ("Todo listo... \n");
                   }    
           });
-
+          
       }
   else
       {
           console.log("Connection failed " + err.message);
       }
 
-
-
 });
-
-/*
-pool.getConnection((err, connection) => {
-  if (err) {
-    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-      console.error('Database connection was closed.');
-    }
-    if (err.code === 'ER_CON_COUNT_ERROR') {
-      console.error('Database has to many connections');
-    }
-    if (err.code === 'ECONNREFUSED') {
-      console.error('Database connection was refused' + err.message);
-    }
-  }
-
-  if (connection) {
-
-    
-    
-    console.log('<<< DB is Connected >>>');  
-    connection.release();
-  } 
-  
-
-  return;
-});
-
-*/
-// Promisify Pool Querys
-//pool.query = promisify(pool.query);
 
 module.exports = mysqlConection;
-//module.exports = pool;
+
 
