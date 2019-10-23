@@ -9,7 +9,10 @@ router.use(bodyParser.json());
 
 // Obteniendo todos los pedidos
 router.get('/pedidos', async (req,res) => { 
-    const pedidos = await connection.query('SELECT * FROM pedido', (err, results) => { 
+
+    const query = 'select id,id_cliente, id_establecimiento, (select nombre from estado_pedido where id = id_estado) estado, observaciones, destino, fecha_inicio,fecha_fin from pedido;';
+
+    const pedidos = await connection.query(query, (err, results) => { 
         if (err)
             {
                 console.log('Error: ' + err);
@@ -90,8 +93,7 @@ router.post('/pedidos/:id', async (req, res) => {
                 res.send(results);                
             }
     })
-    //req.flash('success', 'Link Saved Successfully');
-    //res.redirect('/links');
+    
 });
 
 // Eliminando un pedido exacto  
