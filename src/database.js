@@ -6,8 +6,6 @@ const { database } = require('./keys');
 var mysqlConection = mysql.createConnection(database);
 
 
-// var mysqlConection = mysql.createConnection(database);
-
 mysqlConection.connect ((err) => {
   if(!err)
       {
@@ -48,7 +46,7 @@ mysqlConection.connect ((err) => {
       }
   else
       {
-          console.log("Connection failed asd " + err.message);
+          console.log("Connection failed " + err.message);
       }
 
 
