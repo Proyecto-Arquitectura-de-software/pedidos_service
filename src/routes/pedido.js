@@ -3,7 +3,6 @@ const router = express.Router();
 const connection = require('../database');
 const bodyParser = require('body-parser');
 
-
 router.use(bodyParser.json());
 
 
@@ -29,7 +28,10 @@ router.get('/pedidos', async (req,res) => {
 
 // Obteniendo un pedido exacto  
 router.get('/pedidos/:id', async (req,res) => { 
-    const pedidos = await connection.query('SELECT * FROM pedido where id = ' + req.params.id, (err, results) => { 
+
+    const query = 'select id,id_cliente, id_establecimiento, (select nombre from estado_pedido where id = id_estado) estado, observaciones, destino, fecha_inicio,fecha_fin from pedido where id = ';
+
+    const pedidos = await connection.query(query + req.params.id, (err, results) => { 
         if (err)
             {
                 console.log('Error: ' + err);
@@ -38,6 +40,7 @@ router.get('/pedidos/:id', async (req,res) => {
         else
             {
                 console.log('Consulta exacta con resultados: ' + results);
+                
                 res.send(results);
             }
     })
