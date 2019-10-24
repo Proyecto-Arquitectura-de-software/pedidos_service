@@ -50,12 +50,13 @@ router.get('/pedidos/:id', async (req,res) => {
 // Creando un pedido nuevo
 router.post('/pedidos', async (req, res) => {
     console.log('EL body: ' + req.body);
-    const { id, id_cliente, id_estado, observaciones} = req.body;
-    const nuevoPedido = {
-        id,
+    const {id_cliente, id_establecimiento, id_estado, observaciones, destino} = req.body;
+    const nuevoPedido = {        
         id_cliente,
+        id_establecimiento,
         id_estado,
-        observaciones    
+        observaciones,
+        destino
     };
 
     await connection.query('INSERT INTO pedido set ?', [nuevoPedido], (err, results) => { 
@@ -70,18 +71,19 @@ router.post('/pedidos', async (req, res) => {
                 res.send(results);
             }
     })
-    //req.flash('success', 'Link Saved Successfully');
-    //res.redirect('/links');
+    
 });
 
 // Actualizando un pedido exacto
 router.post('/pedidos/:id', async (req, res) => {
     const { id } = req.params;
-    const {id_cliente, id_estado, observaciones} = req.body;
+    const {id_cliente, id_establecimiento, id_estado, observaciones, destino} = req.body;
     const cambiosPedido = {        
         id_cliente,
+        id_establecimiento,
         id_estado,
-        observaciones    
+        observaciones,
+        destino
     };
     console.log(cambiosPedido);
     await connection.query('UPDATE pedido set ? WHERE id = ?', [cambiosPedido, id], (err, results) => { 

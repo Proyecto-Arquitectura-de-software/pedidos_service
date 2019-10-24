@@ -1,3 +1,6 @@
+
+-- ATTENTION: Use this script in rancher mysql console, because when you launch a stack.. an error causes that tables doesn't create. Just database is created.
+
 CREATE DATABASE db_pedidos;
 
 USE db_pedidos;
@@ -23,7 +26,7 @@ INSERT INTO estado_pedido VALUES (3, 'Finalizado', 'El pedido esta en estado fin
 
 
 CREATE TABLE pedido ( 
-  id INT(11) NOT NULL, 
+  id INT(11) NOT NULL AUTO_INCREMENT, 
   id_cliente INT(11) NOT NULL, 
   id_establecimiento INT(11) NOT NULL,
   id_estado INT(11) NOT NULL, 
@@ -31,22 +34,12 @@ CREATE TABLE pedido (
   destino VARCHAR(4000), 
   fecha_inicio timestamp NOT NULL DEFAULT current_timestamp, 
   fecha_fin timestamp NOT NULL DEFAULT current_timestamp,
+   PRIMARY KEY (id),
    CONSTRAINT fk_estado FOREIGN KEY(id_estado) REFERENCES estado_pedido(id)
 );
   
 
-ALTER TABLE pedido
-  ADD PRIMARY KEY (id);
 
---ALTER TABLE pedido
-  --MODIFY id INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 2;
+INSERT INTO pedido VALUES (null, 12, 101, 1, 'Es el pedido del establecimiento 101 para el cliente 12, y esta en estado creado', 'Universidad Nacional entrada 45', null, null);
 
--- DESCRIBE users;
-
-INSERT INTO pedido VALUES (1, 12, 1, 'Es el pedido para el cliente 12, y esta en estado en curso (1)', null, null);
-
---INSERT INTO pedido (id,id_cliente,id_estado,observaciones) VALUES (2, 12, 1, 'Es el pedido para el cliente 12, y esta en estado en curso (1)');
-
-select id,id_cliente, id_establecimiento, (select nombre from estado_pedido where id = id_estado) estado, observaciones, destino, fecha_inicio,fecha_fin from pedido;
-
-
+INSERT INTO pedido VALUES (null, 13, 102, 2, 'Es el pedido del establecimiento 102 para el cliente 13, y esta en estado en curso', 'Calle 40 #88-99', null, null);

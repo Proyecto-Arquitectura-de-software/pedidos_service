@@ -1,9 +1,9 @@
 module.exports = {
 
     database: {        
-        host : 'localhost',
+        host: 'localhost',        
         user : 'root',
-        password : 'Computing0',  
+        password : 'Computing0',          
         multipleStatements : true          
     }
 
