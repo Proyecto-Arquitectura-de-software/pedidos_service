@@ -9,9 +9,9 @@ services:
  dbpedidos:
   image: mysql:5.7
   environment:
-   MYSQL_ROOT_PASSWORD: Computing0
+   MYSQL_ROOT_PASSWORD: password
    MYSQL_DATABASE: dbpedidos
    MYSQL_USER: root
-   MYSQL_PASSWORD: Computing0
+   MYSQL_PASSWORD: password
   ports:
    - "7000:3306"
