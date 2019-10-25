@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require("body-parser");
 const morgan = require('morgan');
+const cors = require('cors');
 const { database } = require('./keys');
 
 // Inicialization
@@ -26,6 +27,7 @@ app.use((req, res, next) => {
 
 // Setup
 app.set('port', 3100);
+app.use(cors());
 app.use(bodyParser.json());
 
 // MIddlewares
