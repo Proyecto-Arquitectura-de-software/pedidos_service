@@ -11,7 +11,7 @@ router.get('/pedidos', async (req,res) => {
 
     const query = 'select id,id_cliente, id_establecimiento, (select nombre from estado_pedido where id = id_estado) estado, observaciones, destino, fecha_inicio,fecha_fin from pedido;';
 
-    const pedidos = await connection.query(query, (err, results) => { 
+    await connection.query(query, (err, results) => { 
         if (err)
             {
                 console.log('Error: ' + err);
@@ -31,7 +31,7 @@ router.get('/pedidos/:id', async (req,res) => {
 
     const query = 'select id,id_cliente, id_establecimiento, (select nombre from estado_pedido where id = id_estado) estado, observaciones, destino, fecha_inicio,fecha_fin from pedido where id = ';
 
-    const pedidos = await connection.query(query + req.params.id, (err, results) => { 
+    await connection.query(query + req.params.id, (err, results) => { 
         if (err)
             {
                 console.log('Error: ' + err);
@@ -40,6 +40,27 @@ router.get('/pedidos/:id', async (req,res) => {
         else
             {
                 console.log('Consulta exacta con resultados: ' + results);
+                
+                res.send(results);
+            }
+    })
+
+});
+
+// Obteniendo los pedidos dados un establecimiento y un cliente  
+router.get('/pedidos_cliente', async (req,res) => { 
+
+    const query = 'select id,id_cliente, id_establecimiento, (select nombre from estado_pedido where id = id_estado) estado, observaciones, destino, fecha_inicio,fecha_fin from pedido where id_cliente = ? and id_establecimiento = ?';
+
+    await connection.query(query, [req.body.id_cliente, req.body.id_establecimiento], (err, results) => { 
+        if (err)
+            {
+                console.log('Error: ' + err);
+                res.send(err);                
+            }
+        else
+            {
+                console.log('Consulta de cliente y establecimiento: ' + results);
                 
                 res.send(results);
             }
@@ -103,7 +124,8 @@ router.post('/pedidos/:id', async (req, res) => {
 
 // Eliminando un pedido exacto  
 router.delete('/pedidos/:id', async (req,res) => { 
-    const pedidos = await connection.query('DELETE FROM pedido where id = ' + req.params.id, (err, results) => { 
+    
+    await connection.query('DELETE FROM pedido where id = ' + req.params.id, (err, results) => { 
         if (err)
             {
                 console.log('Error: ' + err);

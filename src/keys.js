@@ -1,3 +1,6 @@
+
+/*
+// Para subir en la imagen docker
 module.exports = {
 
     database: {        
@@ -10,8 +13,9 @@ module.exports = {
 
 };
 
-/*
+*/
 
+// Para usar en desarrollo
 module.exports = {
 
     database: {        
@@ -24,4 +28,3 @@ module.exports = {
 };
 
 
-*/
