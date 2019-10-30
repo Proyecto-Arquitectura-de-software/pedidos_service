@@ -48,11 +48,11 @@ router.get('/pedidos/:id', async (req,res) => {
 });
 
 // Obteniendo los pedidos dados un establecimiento y un cliente  
-router.get('/pedidos_cliente', async (req,res) => { 
+router.get('/pedidos_cliente/:id_cliente/:id_establecimiento', async (req,res) => { 
 
     const query = 'select id,id_cliente, id_establecimiento, (select nombre from estado_pedido where id = id_estado) estado, observaciones, destino, fecha_inicio,fecha_fin from pedido where id_cliente = ? and id_establecimiento = ?';
 
-    await connection.query(query, [req.body.id_cliente, req.body.id_establecimiento], (err, results) => { 
+    await connection.query(query, [req.params.id_cliente, req.params.id_establecimiento], (err, results) => { 
         if (err)
             {
                 console.log('Error: ' + err);
