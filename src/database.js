@@ -27,19 +27,19 @@ mysqlConection.connect ((err) => {
           
           // Setting up estado_pedido table
           var query = "CREATE TABLE estado_pedido (id INT(11) NOT NULL, nombre VARCHAR(150) NOT NULL, descripcion VARCHAR(150));";    
-          query = query + "ALTER TABLE estado_pedido ADD PRIMARY KEY (id);";
+          query += "ALTER TABLE estado_pedido ADD PRIMARY KEY (id);";
 
           // Seeds for estado_pedido table
-          query = query + "INSERT INTO estado_pedido VALUES (1, 'Creado', 'El pedido esta en estado creado cuando el usuario esta agregando productos pero no ha solicitado el envio del pedido');";
-          query = query + "INSERT INTO estado_pedido VALUES (2, 'En curso', 'El pedido esta en estado en curso cuando el domiciliario ya esta llevando el pedido al cliente');";
-          query = query + "INSERT INTO estado_pedido VALUES (3, 'Finalizado', 'El pedido esta en estado finalizado cuando el cliente ya ha recibido el pedido');";
+          query += "INSERT INTO estado_pedido VALUES (1, 'Creado', 'El pedido esta en estado creado cuando el usuario esta agregando productos pero no ha solicitado el envio del pedido');";
+          query += "INSERT INTO estado_pedido VALUES (2, 'En curso', 'El pedido esta en estado en curso cuando el domiciliario ya esta llevando el pedido al cliente');";
+          query += "INSERT INTO estado_pedido VALUES (3, 'Finalizado', 'El pedido esta en estado finalizado cuando el cliente ya ha recibido el pedido');";
 
           // Setting up pedido table
-          query = query + "CREATE TABLE pedido ( id INT(11) NOT NULL AUTO_INCREMENT, id_cliente INT(11) NOT NULL, id_establecimiento INT(11) NOT NULL, id_estado INT(11) NOT NULL, observaciones VARCHAR(4000), destino VARCHAR(4000), fecha_inicio timestamp NOT NULL DEFAULT current_timestamp, fecha_fin timestamp NOT NULL DEFAULT current_timestamp, PRIMARY KEY (id), CONSTRAINT fk_estado FOREIGN KEY(id_estado) REFERENCES estado_pedido(id));";          
+          query += "CREATE TABLE pedido ( id INT(11) NOT NULL AUTO_INCREMENT, id_cliente VARCHAR(400) NOT NULL, id_establecimiento VARCHAR(400) NOT NULL, id_estado INT(11) NOT NULL, observaciones VARCHAR(4000), destino VARCHAR(400), fecha_inicio timestamp NOT NULL DEFAULT current_timestamp, fecha_fin timestamp NOT NULL DEFAULT current_timestamp, PRIMARY KEY (id), CONSTRAINT fk_estado FOREIGN KEY(id_estado) REFERENCES estado_pedido(id));";          
 
           // Seeds for pedido table
-          query = query + "INSERT INTO pedido VALUES (null, 12, 101, 1, 'Es el pedido del establecimiento 101 para el cliente 12, y esta en estado creado', 'Universidad Nacional entrada 45', null, null);";
-          query = query + "INSERT INTO pedido VALUES (null, 13, 102, 2, 'Es el pedido del establecimiento 102 para el cliente 13, y esta en estado en curso', 'Calle 40 #88-99', null, null);";
+          query += "INSERT INTO pedido VALUES (null, '5dc22701c7900c00135e604c', '5dc22802c7900c00135e604d', 1, 'Pedido en creacion para el cliente con nombre Test name 1 y establecimiento test restaurant 1', 'Universidad Nacional entrada 45', null, null);";
+          query += "INSERT INTO pedido VALUES (null, '5dc229d7c7900c00135e604e', '5dc229f1c7900c00135e604f', 2, 'Pedido en curso para el cliente con nombre Test name 2 y establecimiento test restaurant 2', 'Calle 40 #88-99', null, null);";
 
           mysqlConection.query(query, function (err,result){
               if(err)
