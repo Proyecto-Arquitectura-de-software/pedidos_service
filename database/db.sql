@@ -32,6 +32,7 @@ CREATE TABLE pedido (
   id_estado INT(11) NOT NULL, 
   observaciones VARCHAR(4000), 
   destino VARCHAR(400), 
+  metodo_pago VARCHAR(400), 
   fecha_inicio timestamp NOT NULL DEFAULT current_timestamp, 
   fecha_fin timestamp NOT NULL DEFAULT current_timestamp,
    PRIMARY KEY (id),
@@ -40,6 +41,17 @@ CREATE TABLE pedido (
   
 
 
-INSERT INTO pedido VALUES (null, '5dc22701c7900c00135e604c', '5dc22802c7900c00135e604d', 1, 'Pedido en creacion para el cliente con nombre Test name 1 y establecimiento test restaurant 1', 'Universidad Nacional entrada 45', null, null);
+INSERT INTO pedido VALUES (null, '5dc22701c7900c00135e604c', '5dc22802c7900c00135e604d', 1, 'Pedido en creacion para el cliente con nombre Test name 1 y establecimiento test restaurant 1', 'Universidad Nacional entrada 45', 'Debito' null, null);
 
-INSERT INTO pedido VALUES (null, '5dc229d7c7900c00135e604e', '5dc229f1c7900c00135e604f', 2, 'Pedido en curso para el cliente con nombre Test name 2 y establecimiento test restaurant 2', 'Calle 40 #88-99', null, null);
+INSERT INTO pedido VALUES (null, '5dc229d7c7900c00135e604e', '5dc229f1c7900c00135e604f', 2, 'Pedido en curso para el cliente con nombre Test name 2 y establecimiento test restaurant 2', 'Calle 40 #88-99', 'Efectivo' null, null);
+
+-- Table many to many for pedido and producto
+CREATE TABLE pedido_producto ( 
+  id INT(11) NOT NULL AUTO_INCREMENT, 
+  id_pedido INT(11) NOT NULL,
+  id_producto INT(11) NOT NULL,
+   PRIMARY KEY (id),
+   CONSTRAINT fk_pedido FOREIGN KEY(id_pedido) REFERENCES pedido(id)
+   -- Cannot create foraign key directly with product because his db is in another Microservice
+   -- Referential integrity is ensured by logic
+);
