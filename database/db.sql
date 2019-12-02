@@ -5,7 +5,8 @@ CREATE DATABASE db_pedidos;
 
 USE db_pedidos;
 
--- ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password'
+-- ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+-- FLUSH PRIVILEGES;
 
 CREATE TABLE estado_pedido (
   id INT(11) NOT NULL,

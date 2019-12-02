@@ -11,7 +11,13 @@ mysqlConection.connect ((err) => {
       {
           console.log("connected");
           var createDatabase = "DROP DATABASE IF EXISTS dbpedidos;";
-          createDatabase = createDatabase + "CREATE DATABASE dbpedidos;";          
+          createDatabase += "CREATE DATABASE dbpedidos;";          
+
+          // Nuevo
+          //createDatabase += "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';";
+          //createDatabase += "FLUSH PRIVILEGES;";   
+
+          // Nuevo
 
           mysqlConection.query(createDatabase, (err) => {
               if(err)
@@ -35,11 +41,11 @@ mysqlConection.connect ((err) => {
           query += "INSERT INTO estado_pedido VALUES (3, 'Finalizado', 'El pedido esta en estado finalizado cuando el cliente ya ha recibido el pedido');";
 
           // Setting up pedido table
-          query += "CREATE TABLE pedido ( id INT(11) NOT NULL AUTO_INCREMENT, id_cliente VARCHAR(400) NOT NULL, id_establecimiento VARCHAR(400) NOT NULL, id_estado INT(11) NOT NULL, observaciones VARCHAR(4000), destino VARCHAR(400), metodo_pago VARCHAR(400), fecha_inicio timestamp NOT NULL DEFAULT current_timestamp, fecha_fin timestamp NOT NULL DEFAULT current_timestamp, PRIMARY KEY (id), CONSTRAINT fk_estado FOREIGN KEY(id_estado) REFERENCES estado_pedido(id));";          
+          query += "CREATE TABLE pedido ( id INT(11) NOT NULL AUTO_INCREMENT, id_cliente VARCHAR(400) NOT NULL, id_establecimiento VARCHAR(400) NOT NULL, id_estado INT(11) NOT NULL, observaciones VARCHAR(4000), destino VARCHAR(400), metodo_pago VARCHAR(400), fecha_inicio timestamp DEFAULT current_timestamp, fecha_fin timestamp DEFAULT current_timestamp, PRIMARY KEY (id), CONSTRAINT fk_estado FOREIGN KEY(id_estado) REFERENCES estado_pedido(id));";          
 
           // Seeds for pedido table
-          query += "INSERT INTO pedido VALUES (null, '5dc22701c7900c00135e604c', '5dc22802c7900c00135e604d', 1, 'Pedido en creacion para el cliente con nombre Test name 1 y establecimiento test restaurant 1', 'Universidad Nacional entrada 45', 'Debito' null, null);";
-          query += "INSERT INTO pedido VALUES (null, '5dc229d7c7900c00135e604e', '5dc229f1c7900c00135e604f', 2, 'Pedido en curso para el cliente con nombre Test name 2 y establecimiento test restaurant 2', 'Calle 40 #88-99', 'Efectivo' null, null);";
+          query += "INSERT INTO pedido VALUES (null, '5dc22701c7900c00135e604c', '5dc22802c7900c00135e604d', 1, 'Pedido en creacion para el cliente con nombre Test name 1 y establecimiento test restaurant 1', 'Universidad Nacional entrada 45', 'Debito', now(), now());";
+          query += "INSERT INTO pedido VALUES (null, '5dc229d7c7900c00135e604e', '5dc229f1c7900c00135e604f', 2, 'Pedido en curso para el cliente con nombre Test name 2 y establecimiento test restaurant 2', 'Calle 40 #88-99', 'Efectivo', now(), now());";
 
           mysqlConection.query(query, function (err,result){
               if(err)
